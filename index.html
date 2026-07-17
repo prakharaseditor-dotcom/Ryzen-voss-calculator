@@ -1,0 +1,469 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ryzen Voss Calculator</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+<style>
+
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:'Poppins',sans-serif;
+-webkit-tap-highlight-color:transparent;
+}
+
+body{
+min-height:100vh;
+display:flex;
+justify-content:center;
+align-items:center;
+overflow:hidden;
+background:#090909;
+position:relative;
+}
+
+body::before{
+content:"";
+position:absolute;
+width:450px;
+height:450px;
+background:#8a2be2;
+border-radius:50%;
+left:-150px;
+top:-150px;
+filter:blur(160px);
+animation:float1 8s ease-in-out infinite;
+}
+
+body::after{
+content:"";
+position:absolute;
+width:420px;
+height:420px;
+background:#00d5ff;
+border-radius:50%;
+right:-140px;
+bottom:-140px;
+filter:blur(160px);
+animation:float2 10s ease-in-out infinite;
+}
+
+@keyframes float1{
+0%,100%{transform:translateY(0);}
+50%{transform:translateY(50px);}
+}
+
+@keyframes float2{
+0%,100%{transform:translateY(0);}
+50%{transform:translateY(-60px);}
+}
+
+.calculator{
+
+width:min(95vw,420px);
+
+backdrop-filter:blur(25px);
+
+background:rgba(255,255,255,.08);
+
+border:1px solid rgba(255,255,255,.12);
+
+border-radius:28px;
+
+padding:22px;
+
+box-shadow:
+0 10px 45px rgba(0,0,0,.5),
+0 0 30px rgba(138,43,226,.25);
+
+position:relative;
+
+z-index:10;
+
+}
+
+.header{
+
+display:flex;
+
+justify-content:space-between;
+
+align-items:center;
+
+margin-bottom:18px;
+
+}
+
+.logo{
+
+font-size:20px;
+
+font-weight:700;
+
+background:linear-gradient(90deg,#00d5ff,#9b4dff);
+
+-webkit-background-clip:text;
+
+-webkit-text-fill-color:transparent;
+
+}
+
+.theme{
+
+width:42px;
+
+height:42px;
+
+border-radius:50%;
+
+border:none;
+
+cursor:pointer;
+
+font-size:18px;
+
+background:rgba(255,255,255,.08);
+
+color:white;
+
+transition:.3s;
+
+}
+
+.theme:hover{
+
+transform:rotate(180deg);
+
+}
+
+.display{
+
+height:120px;
+
+border-radius:20px;
+
+padding:15px;
+
+background:rgba(255,255,255,.06);
+
+display:flex;
+
+flex-direction:column;
+
+justify-content:flex-end;
+
+align-items:flex-end;
+
+overflow:hidden;
+
+}
+
+.history{
+
+font-size:17px;
+
+color:#bdbdbd;
+
+min-height:25px;
+
+}
+
+.result{
+
+font-size:42px;
+
+font-weight:600;
+
+color:#fff;
+
+word-break:break-all;
+
+}
+
+.buttons{
+
+margin-top:20px;
+
+display:grid;
+
+grid-template-columns:repeat(4,1fr);
+
+gap:12px;
+
+}
+
+button{
+
+height:70px;
+
+border:none;
+
+border-radius:18px;
+
+font-size:22px;
+
+cursor:pointer;
+
+color:white;
+
+background:rgba(255,255,255,.08);
+
+transition:.25s;
+
+}
+
+button:hover{
+
+transform:translateY(-3px);
+
+background:rgba(255,255,255,.15);
+
+}
+
+button:active{
+
+transform:scale(.95);
+
+}
+
+.operator{
+
+background:linear-gradient(135deg,#8a2be2,#00d5ff);
+
+font-weight:700;
+
+}
+
+.equal{
+
+grid-column:span 2;
+
+background:linear-gradient(135deg,#00d5ff,#8a2be2);
+
+font-size:28px;
+
+}
+
+.zero{
+
+grid-column:span 2;
+
+}
+
+@media(max-width:480px){
+
+.calculator{
+
+padding:18px;
+
+}
+
+button{
+
+height:65px;
+
+font-size:20px;
+
+}
+
+.result{
+
+font-size:36px;
+
+}
+
+}
+
+.light{
+
+background:#ececec;
+
+}
+
+.light .calculator{
+
+background:rgba(255,255,255,.65);
+
+}
+
+.light .result,
+
+.light .logo,
+
+.light button{
+
+color:#111;
+
+}.light .theme{
+color:#111;
+}
+
+.light .display{
+background:rgba(255,255,255,.5);
+}
+
+.light .history{
+color:#555;
+}
+
+.operator,
+.equal{
+color:#fff !important;
+}
+
+</style>
+</head>
+
+<body>
+
+<div class="calculator">
+
+<div class="header">
+<div class="logo">RYZEN VOSS</div>
+<button class="theme" id="themeBtn">🌙</button>
+</div>
+
+<div class="display">
+<div class="history" id="history"></div>
+<div class="result" id="result">0</div>
+</div>
+
+<div class="buttons">
+
+<button onclick="clearAll()">C</button>
+<button onclick="del()">⌫</button>
+<button onclick="press('%')">%</button>
+<button class="operator" onclick="press('/')">÷</button>
+
+<button onclick="press('7')">7</button>
+<button onclick="press('8')">8</button>
+<button onclick="press('9')">9</button>
+<button class="operator" onclick="press('*')">×</button>
+
+<button onclick="press('4')">4</button>
+<button onclick="press('5')">5</button>
+<button onclick="press('6')">6</button>
+<button class="operator" onclick="press('-')">−</button>
+
+<button onclick="press('1')">1</button>
+<button onclick="press('2')">2</button>
+<button onclick="press('3')">3</button>
+<button class="operator" onclick="press('+')">+</button>
+
+<button class="zero" onclick="press('0')">0</button>
+<button onclick="press('.')">.</button>
+
+<button class="equal" onclick="calculate()">=</button>
+
+</div>
+
+</div>
+
+<script>
+
+const result=document.getElementById("result");
+const history=document.getElementById("history");
+
+let expression="";
+
+function press(value){
+
+if(result.innerText==="0" && value!=="."){
+result.innerText="";
+}
+
+expression+=value;
+result.innerText=expression;
+
+}
+
+function clearAll(){
+
+expression="";
+history.innerText="";
+result.innerText="0";
+
+}
+
+function del(){
+
+expression=expression.slice(0,-1);
+
+result.innerText=expression||"0";
+
+}function calculate(){
+
+try{
+
+history.innerText=expression;
+
+expression=expression.replace(/%/g,"/100");
+
+let answer=eval(expression);
+
+if(answer===Infinity || isNaN(answer)){
+result.innerText="Error";
+expression="";
+return;
+}
+
+answer=parseFloat(answer.toFixed(10));
+
+result.innerText=answer;
+expression=answer.toString();
+
+}catch{
+
+result.innerText="Error";
+expression="";
+
+}
+
+}
+
+document.addEventListener("keydown",(e)=>{
+
+const key=e.key;
+
+if("0123456789+-*/.%".includes(key)){
+press(key);
+}
+
+else if(key==="Enter"){
+e.preventDefault();
+calculate();
+}
+
+else if(key==="Backspace"){
+del();
+}
+
+else if(key==="Escape"){
+clearAll();
+}
+
+});
+
+const themeBtn=document.getElementById("themeBtn");
+
+themeBtn.onclick=()=>{
+
+document.body.classList.toggle("light");
+
+themeBtn.textContent=
+document.body.classList.contains("light")
+?"☀️":"🌙";
+
+};
+
+</script>
+
+</body>
+</html>
