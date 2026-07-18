@@ -1109,6 +1109,13 @@ if("serviceWorker" in navigator){
 }
 
 updateDisplay();
+  window.addEventListener("appinstalled", ()=>{
+  installBtn.style.display="none";
+});
+
+if(window.matchMedia("(display-mode: standalone)").matches){
+  installBtn.style.display="none";
+}
 
 </script>
 
