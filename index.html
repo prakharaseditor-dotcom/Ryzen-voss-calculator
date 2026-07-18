@@ -1111,6 +1111,9 @@ if("serviceWorker" in navigator){
     );
 
   });
+  if(window.matchMedia("(display-mode: standalone)").matches){
+  installBtn.style.display="none";
+  }
 
 }
 
