@@ -1083,6 +1083,12 @@ e=>{
   installBtn.style.display="block";
 
 });
+  if(
+window.matchMedia("(display-mode: standalone)").matches ||
+window.navigator.standalone
+){
+ installBtn.style.display="none";
+  }
 
 installBtn.onclick=async()=>{
 
