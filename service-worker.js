@@ -1,22 +1,36 @@
-const CACHE_NAME = "ryzen-voss-v2";
+const CACHE_NAME = "ryzen-voss-v2.1";
 
-const FILES = [
-  "./",
-  "./index.html",
-  "./manifest.json"
+
+const FILES_TO_CACHE = [
+
+"./",
+
+"./index.html",
+
+"./manifest.json",
+
+"./icon-192.png",
+
+"./icon-512.png"
+
 ];
 
 
+
+// Install
+
 self.addEventListener(
 "install",
-event=>{
+(event)=>{
 
 event.waitUntil(
 
 caches.open(CACHE_NAME)
-.then(cache=>{
+.then((cache)=>{
 
-return cache.addAll(FILES);
+return cache.addAll(
+FILES_TO_CACHE
+);
 
 })
 
@@ -24,37 +38,57 @@ return cache.addAll(FILES);
 
 });
 
+
+
+
+// Fetch offline support
 
 self.addEventListener(
 "fetch",
-event=>{
+(event)=>{
+
 
 event.respondWith(
 
-caches.match(event.request)
-.then(response=>{
+caches.match(
+event.request
+)
 
-return response || fetch(event.request);
+.then((response)=>{
+
+
+return response ||
+fetch(event.request);
+
 
 })
 
+
 );
+
 
 });
 
 
+
+
+// Update cache
+
 self.addEventListener(
 "activate",
-event=>{
+(event)=>{
+
 
 event.waitUntil(
 
 caches.keys()
-.then(keys=>{
+.then((keys)=>{
+
 
 return Promise.all(
 
-keys.map(key=>{
+keys.map((key)=>{
+
 
 if(key!==CACHE_NAME){
 
@@ -62,12 +96,17 @@ return caches.delete(key);
 
 }
 
-})
-
-);
 
 })
 
+
 );
+
+
+})
+
+
+);
+
 
 });

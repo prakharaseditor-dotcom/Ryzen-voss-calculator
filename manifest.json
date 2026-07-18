@@ -1,11 +1,16 @@
 {
-  "name": "Ryzen Voss Calculator",
+  "name": "Ryzen Voss Calculator v2.1",
   "short_name": "Ryzen Voss",
-  "description": "Ryzen Voss Calculator v2.0 - Fast Offline PWA Calculator",
+  "description": "A futuristic offline calculator with themes and history.",
+  
   "start_url": "./index.html",
+  
   "display": "standalone",
-  "background_color": "#0f172a",
+  
+  "background_color": "#020617",
+  
   "theme_color": "#8b5cf6",
+
   "orientation": "portrait",
 
   "icons": [

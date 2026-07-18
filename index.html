@@ -1,19 +1,18 @@
-<!DOCTYPE html>
+<!<!DOCTYPE html>
 <html lang="en">
+
 <head>
 
 <meta charset="UTF-8">
-<meta
-name="viewport"
-content="width=device-width, initial-scale=1.0">
 
-<meta
-name="theme-color"
-content="#6d28d9">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Ryzen Voss Calculator v2.0</title>
+<meta name="theme-color" content="#050505">
 
 <link rel="manifest" href="manifest.json">
+
+<title>Ryzen Voss v2.1</title>
+
 
 <style>
 
@@ -21,1112 +20,938 @@ content="#6d28d9">
 margin:0;
 padding:0;
 box-sizing:border-box;
-font-family:Inter,Segoe UI,Arial,sans-serif;
--webkit-tap-highlight-color:transparent;
+font-family:Segoe UI,Arial,sans-serif;
 }
 
-html,body{
-height:100%;
-}
 
 body{
 
---bg:#0f172a;
---card:#1e293b;
---text:#ffffff;
---accent:#8b5cf6;
---button:#334155;
---buttonHover:#475569;
---shadow:rgba(0,0,0,.35);
-
-background:var(--bg);
-color:var(--text);
+min-height:100vh;
 
 display:flex;
 justify-content:center;
 align-items:center;
 
-padding:20px;
-
-transition:.35s;
-}
-
-.wrapper{
-
-width:100%;
-max-width:420px;
-
-background:var(--card);
-
-border-radius:28px;
-
-padding:22px;
-
-box-shadow:
-0 20px 40px var(--shadow);
-
-backdrop-filter:blur(20px);
-
-}
-
-.title{
-
-font-size:28px;
-font-weight:700;
-
-text-align:center;
-
-margin-bottom:18px;
-
-}
-
-.subtitle{
-
-text-align:center;
-
-opacity:.75;
-
-font-size:13px;
-
-margin-bottom:20px;
-
-}
-
-.toolbar{
-
-display:flex;
-
-gap:10px;
-
-margin-bottom:16px;
-
-}
-
-.toolbar button{
-
-flex:1;
-
-height:46px;
-
-border:none;
-
-border-radius:14px;
-
-background:var(--button);
+background:
+radial-gradient(circle at top,#312e81,#020617);
 
 color:white;
-
-font-size:15px;
-
-cursor:pointer;
-
-transition:.25s;
-
-}
-
-.toolbar button:hover{
-
-background:var(--buttonHover);
-
-}
-
-.display{
-
-background:rgba(255,255,255,.06);
-
-padding:18px;
-
-border-radius:18px;
-
-margin-bottom:18px;
-
-min-height:95px;
-
-display:flex;
-
-flex-direction:column;
-
-justify-content:center;
 
 overflow:hidden;
 
 }
 
-#expression{
 
-font-size:18px;
+/* Stars background */
+
+.stars{
+
+position:fixed;
+inset:0;
+
+background-image:
+radial-gradient(white 1px,transparent 1px);
+
+background-size:80px 80px;
+
+opacity:.35;
+
+animation:
+moveStars 25s linear infinite;
+
+}
+
+
+@keyframes moveStars{
+
+from{
+transform:translateY(0);
+}
+
+to{
+transform:translateY(-120px);
+}
+
+}
+
+
+
+.app{
+
+width:95%;
+
+max-width:430px;
+
+padding:25px;
+
+border-radius:30px;
+
+
+background:
+rgba(255,255,255,.09);
+
+
+backdrop-filter:
+blur(25px);
+
+
+border:
+1px solid rgba(255,255,255,.15);
+
+
+box-shadow:
+0 0 40px rgba(139,92,246,.4);
+
+position:relative;
+
+z-index:2;
+
+}
+
+
+
+.moon{
+
+position:absolute;
+
+right:25px;
+top:25px;
+
+width:60px;
+height:60px;
+
+border-radius:50%;
+
+background:
+linear-gradient(135deg,#fff,#94a3b8);
+
+
+box-shadow:
+0 0 35px white;
+
+}
+
+
+
+.logo{
+
+text-align:center;
+
+font-size:32px;
+
+font-weight:900;
+
+letter-spacing:2px;
+
+}
+
+
+.tag{
+
+text-align:center;
 
 opacity:.7;
 
-word-wrap:break-word;
-
-text-align:right;
-
-min-height:24px;
+margin-top:5px;
 
 }
 
-#result{
 
-font-size:36px;
 
-font-weight:700;
-
-text-align:right;
-
-margin-top:10px;
-
-word-wrap:break-word;
-
-}
-
-.grid{
-
-display:grid;
-
-grid-template-columns:
-repeat(4,1fr);
-
-gap:12px;
-
-}
-
-.key{
-
-height:66px;
-
-border:none;
-
-border-radius:18px;
-
-background:var(--button);
-
-color:white;
-
-font-size:22px;
-
-cursor:pointer;
-
-transition:.25s;
-
-}
-
-.key:hover{
-
-background:var(--buttonHover);
-
-transform:translateY(-2px);
-
-}
-
-.operator{
-
-background:var(--accent);
-
-}
-
-.equal{
-
-grid-column:span 2;
-
-background:#16a34a;
-
-}
-
-.zero{
-
-grid-column:span 2;
-
-}
-
-.bottom{
+.menu{
 
 display:flex;
 
 gap:10px;
 
-margin-top:18px;
+margin:25px 0;
 
 }
 
-.bottom button{
+
+.menu button{
 
 flex:1;
 
-height:48px;
+height:45px;
 
 border:none;
 
-border-radius:14px;
+border-radius:15px;
 
-background:var(--button);
+background:
+rgba(255,255,255,.12);
 
 color:white;
 
 font-size:15px;
 
-cursor:pointer;
-
 }
 
-.historyPanel{
 
-position:fixed;
 
-top:0;
+.display{
 
-right:-100%;
-
-width:320px;
-
-height:100%;
-
-background:#111827;
+background:
+rgba(0,0,0,.25);
 
 padding:20px;
 
-overflow:auto;
+border-radius:22px;
 
-transition:.35s;
-
-z-index:100;
+min-height:110px;
 
 }
 
-.historyPanel.open{
 
-right:0;
+#expression{
 
-}
+text-align:right;
 
-.historyHeader{
+opacity:.6;
 
-display:flex;
-
-justify-content:space-between;
-
-align-items:center;
-
-margin-bottom:20px;
+font-size:18px;
 
 }
 
-.historyItem{
-
-padding:12px;
-
-background:#1f2937;
-
-border-radius:12px;
-
-margin-bottom:10px;
-
-cursor:pointer;
-
-transition:.2s;
-
-}
-
-.historyItem:hover{
-
-background:#374151;
-
-}
-
-.themeMenu{
-
-position:fixed;
-
-left:50%;
-
-top:50%;
-
-transform:
-translate(-50%,-50%)
-scale(.9);
-
-opacity:0;
-
-pointer-events:none;
-
-background:#111827;
-
-padding:20px;
-
-border-radius:20px;
-
-width:320px;
-
-transition:.3s;
-
-z-index:120;
-
-}
-
-.themeMenu.show{
-
-opacity:1;
-
-transform:
-translate(-50%,-50%)
-scale(1);
-
-pointer-events:auto;
-
-}
-
-.themeGrid{
-
-display:grid;
-
-grid-template-columns:
-repeat(2,1fr);
-
-gap:12px;
-
-margin-top:18px;
-
-}
-
-.themeCard{
-
-height:60px;
-
-border-radius:14px;
-
-cursor:pointer;
-
-border:2px solid transparent;
-
-transition:.25s;
-
-}
-
-.themeCard:hover{
-
-transform:scale(1.05);
-
-}
-
-.overlay{
-
-position:fixed;
-
-inset:0;
-
-background:rgba(0,0,0,.5);
-
-opacity:0;
-
-pointer-events:none;
-
-transition:.3s;
-
-z-index:110;
-
-}
-
-.overlay.show{
-
-opacity:1;
-
-pointer-events:auto;
-
-}
-
-@media(max-width:480px){
-
-.wrapper{
-
-padding:16px;
-
-}
-
-.key{
-
-height:60px;
-
-font-size:20px;
-
-}
 
 #result{
 
-font-size:30px;
+text-align:right;
+
+font-size:40px;
+
+font-weight:800;
+
+margin-top:10px;
 
 }
 
+
+.keys{
+
+display:grid;
+
+grid-template-columns:repeat(4,1fr);
+
+gap:12px;
+
+margin-top:20px;
+
 }
+
+
+
+.key{
+
+height:65px;
+
+border:none;
+
+border-radius:20px;
+
+background:
+rgba(255,255,255,.12);
+
+color:white;
+
+font-size:22px;
+
+}
+
+
+
+.key:active{
+
+transform:scale(.92);
+
+}
+
+
+
+.operator{
+
+background:
+linear-gradient(135deg,#8b5cf6,#ec4899);
+
+}
+
+
+
+.equal{
+
+grid-column:span 2;
+
+background:
+linear-gradient(135deg,#22c55e,#06b6d4);
+
+}
+
+
 
 </style>
 
 </head>
 
+
 <body>
 
-<div class="wrapper">
 
-<div class="title">
+<div class="stars"></div>
+
+
+<div class="app">
+
+
+<div class="moon"></div>
+
+
+<div class="logo">
 Ryzen Voss
 </div>
 
-<div class="subtitle">
-Calculator v2.0
+
+<div class="tag">
+Calculator v2.1
 </div>
 
-<div class="toolbar">
 
-<button id="historyBtn">
+<div class="menu">
+
+<button>
 History
 </button>
 
-<button id="themeBtn">
+<button>
 Themes
 </button>
 
 </div>
 
+
 <div class="display">
 
 <div id="expression"></div>
 
-<div id="result">0</div>
+<div id="result">
+0
+</div>
 
 </div>
 
-<div class="grid">
 
-<button class="key operator" data-value="C">C</button>
+<div class="keys">
+    <button class="key operator" data-value="C">
+C
+</button>
 
-<button class="key operator" data-value="⌫">⌫</button>
+<button class="key operator" data-value="⌫">
+⌫
+</button>
 
-<button class="key operator" data-value="%">%</button>
+<button class="key operator" data-value="%">
+%
+</button>
 
-<button class="key operator" data-value="/">÷</button>
+<button class="key operator" data-value="/">
+÷
+</button>
 
-<button class="key" data-value="7">7</button>
 
-<button class="key" data-value="8">8</button>
+<button class="key" data-value="7">
+7
+</button>
 
-<button class="key" data-value="9">9</button>
+<button class="key" data-value="8">
+8
+</button>
 
-<button class="key operator" data-value="*">×</button>
+<button class="key" data-value="9">
+9
+</button>
 
-<button class="key" data-value="4">4</button>
+<button class="key operator" data-value="*">
+×
+</button>
 
-<button class="key" data-value="5">5</button>
 
-<button class="key" data-value="6">6</button>
+<button class="key" data-value="4">
+4
+</button>
 
-<button class="key operator" data-value="-">−</button>
+<button class="key" data-value="5">
+5
+</button>
 
-<button class="key" data-value="1">1</button>
+<button class="key" data-value="6">
+6
+</button>
 
-<button class="key" data-value="2">2</button>
+<button class="key operator" data-value="-">
+−
+</button>
 
-<button class="key" data-value="3">3</button>
 
-<button class="key operator" data-value="+">+</button>
+<button class="key" data-value="1">
+1
+</button>
 
-<button class="key zero" data-value="0">0</button>
+<button class="key" data-value="2">
+2
+</button>
 
-<button class="key" data-value=".">.</button>
+<button class="key" data-value="3">
+3
+</button>
 
-<button class="key equal" data-value="=">=</button>
+<button class="key operator" data-value="+">
++
+</button>
+
+
+<button class="key" data-value="0">
+0
+</button>
+
+<button class="key" data-value=".">
+.
+</button>
+
+<button class="key equal" data-value="=">
+=
+</button>
+
 
 </div>
 
-<div class="bottom">
+
+<div class="menu">
 
 <button id="copyBtn">
-Copy
+Copy Result
 </button>
 
 <button id="installBtn">
-Install
+Install App
 </button>
 
 </div>
 
-</div>
-
-<div class="overlay" id="overlay"></div>
-
-<div class="historyPanel" id="historyPanel">
-
-<div class="historyHeader">
-
-<h2>History</h2>
-
-<button id="closeHistory">
-✕
-</button>
 
 </div>
 
-<div id="historyList"></div>
-
-<button id="clearHistory">
-Clear History
-</button>
-
-</div>
-
-<div class="themeMenu" id="themeMenu">
-
-<h2>Select Theme</h2>
-
-<div class="themeGrid" id="themeGrid">
-
-
-
-<div
-class="themeCard"
-data-theme="midnight"
-style="background:#0f172a;">
-</div>
-
-<div
-class="themeCard"
-data-theme="amoled"
-style="background:#000000;">
-</div>
-
-<div
-class="themeCard"
-data-theme="purple"
-style="background:#6d28d9;">
-</div>
-
-<div
-class="themeCard"
-data-theme="emerald"
-style="background:#059669;">
-</div>
-
-<div
-class="themeCard"
-data-theme="sunset"
-style="background:#ea580c;">
-</div>
-
-<div
-class="themeCard"
-data-theme="rose"
-style="background:#e11d48;">
-</div>
-
-<div
-class="themeCard"
-data-theme="arctic"
-style="background:#f3f4f6;border:1px solid #d1d5db;">
-</div>
-
-<div
-class="themeCard"
-data-theme="cyber"
-style="background:#06b6d4;">
-</div>
-
-</div>
-
-</div>
 
 <script>
 
-const expressionEl =
+
+let current="";
+
+
+const result =
+document.getElementById("result");
+
+
+const expression =
 document.getElementById("expression");
 
-const resultEl =
-document.getElementById("result");
 
 const keys =
 document.querySelectorAll(".key");
 
+
 const copyBtn =
 document.getElementById("copyBtn");
+
 
 const installBtn =
 document.getElementById("installBtn");
 
-const historyBtn =
-document.getElementById("historyBtn");
 
-const historyPanel =
-document.getElementById("historyPanel");
 
-const closeHistory =
-document.getElementById("closeHistory");
+keys.forEach(key=>{
 
-const historyList =
-document.getElementById("historyList");
+key.onclick=()=>{
 
-const clearHistory =
-document.getElementById("clearHistory");
+let value =
+key.dataset.value;
 
-const overlay =
-document.getElementById("overlay");
 
-const themeBtn =
-document.getElementById("themeBtn");
+handle(value);
 
-const themeMenu =
-document.getElementById("themeMenu");
+};
 
-const themeCards =
-document.querySelectorAll(".themeCard");
+});
 
-let expression = "";
 
-let deferredPrompt = null;
+
+function handle(value){
+
+
+if(value==="C"){
+
+current="";
+
+}
+
+
+else if(value==="⌫"){
+
+current =
+current.slice(0,-1);
+
+}
+
+
+else if(value==="="){
+
+calculate();
+
+}
+
+
+else{
+
+current += value;
+
+}
+
+
+
+expression.innerText =
+current;
+
+
+result.innerText =
+current || "0";
+
+
+}
+
+
+
+function calculate(){
+
+try{
+
+
+let answer =
+Function(
+"return "+current
+)();
+
+
+result.innerText =
+answer;
+
+
+current =
+String(answer);
+
+
+
+}
+
+catch{
+
+
+result.innerText =
+"Error";
+
+}
+
+
+}
+
+// Theme System
+
+const themes = {
+
+cosmic:{
+background:
+"radial-gradient(circle at top,#312e81,#020617)",
+glow:"#8b5cf6"
+},
+
+
+cyber:{
+background:
+"radial-gradient(circle at top,#164e63,#001018)",
+glow:"#06b6d4"
+},
+
+
+aurora:{
+background:
+"radial-gradient(circle at top,#065f46,#022c22)",
+glow:"#10b981"
+},
+
+
+flame:{
+background:
+"radial-gradient(circle at top,#9a3412,#1c0800)",
+glow:"#f97316"
+},
+
+
+arctic:{
+background:
+"radial-gradient(circle at top,#e0f2fe,#64748b)",
+glow:"#0284c7"
+},
+
+
+royal:{
+background:
+"radial-gradient(circle at top,#581c87,#1e1038)",
+glow:"#c084fc"
+},
+
+
+ocean:{
+background:
+"radial-gradient(circle at top,#0369a1,#001f3f)",
+glow:"#38bdf8"
+},
+
+
+amoled:{
+background:
+"#000000",
+glow:"#ffffff"
+}
+
+};
+
+
+
+function setTheme(name){
+
+let theme =
+themes[name];
+
+
+if(!theme)
+return;
+
+
+document.body.style.background =
+theme.background;
+
+
+document.querySelector(".app")
+.style.boxShadow =
+"0 0 45px "+theme.glow;
+
+
+localStorage.setItem(
+"rv_theme",
+name
+);
+
+
+}
+
+
+
+
+let savedTheme =
+localStorage.getItem(
+"rv_theme"
+);
+
+
+if(savedTheme){
+
+setTheme(savedTheme);
+
+}
+
+
+
+// Theme button
+
+const themeButton =
+document.querySelector(
+".menu button:nth-child(2)"
+);
+
+
+themeButton.onclick=()=>{
+
+
+let choice =
+prompt(
+"Choose Theme:\n\n1 Cosmic Night\n2 Cyber City\n3 Aurora\n4 Solar Flame\n5 Arctic Glass\n6 Royal Galaxy\n7 Ocean Deep\n8 AMOLED"
+);
+
+
+
+const themeList=[
+
+"cosmic",
+"cyber",
+"aurora",
+"flame",
+"arctic",
+"royal",
+"ocean",
+"amoled"
+
+];
+
+
+
+let selected =
+themeList[Number(choice)-1];
+
+
+if(selected){
+
+setTheme(selected);
+
+}
+
+
+};
+
+
+
+// History
 
 let history =
 JSON.parse(
 localStorage.getItem("rv_history")
-) || [];
+)||[];
 
-function updateDisplay(){
 
-expressionEl.textContent =
-expression || "";
 
-resultEl.textContent =
-expression || "0";
+function addHistory(){
 
-}
+if(!current)
+return;
 
-function saveHistory(item){
 
-history.unshift(item);
+history.unshift({
 
-if(history.length>100){
+text:expression.innerText,
+result:result.innerText
+
+});
+
+
+if(history.length>50){
 
 history.pop();
 
 }
+
 
 localStorage.setItem(
 "rv_history",
 JSON.stringify(history)
 );
 
-renderHistory();
 
 }
 
-function renderHistory(){
 
-historyList.innerHTML="";
 
-history.forEach(entry=>{
+// Save after calculation
 
-const div =
-document.createElement("div");
+const oldCalculate =
+calculate;
 
-div.className =
-"historyItem";
 
-div.innerHTML =
-`
-<div>${entry.exp}</div>
-<strong>${entry.result}</strong>
-`;
+calculate=function(){
 
-div.onclick=()=>{
+oldCalculate();
 
-expression =
-entry.result;
-
-updateDisplay();
-
-historyPanel.classList.remove("open");
-
-overlay.classList.remove("show");
+addHistory();
 
 };
 
-historyList.appendChild(div);
-
-});
-
-}
-
-renderHistory();
 
 
+// Copy button
 
-keys.forEach(button=>{
+copyBtn.onclick=()=>{
 
-button.addEventListener("click",()=>{
 
-const value=
-button.dataset.value;
+navigator.clipboard.writeText(
+result.innerText
+);
 
-handleInput(value);
 
-});
+copyBtn.innerText =
+"Copied ✓";
 
-});
-
-function handleInput(value){
-
-switch(value){
-
-case "C":
-
-expression="";
-
-updateDisplay();
-
-break;
-
-case "⌫":
-
-expression=
-expression.slice(0,-1);
-
-updateDisplay();
-
-break;
-
-case "=":
-
-calculate();
-
-break;
-
-default:
-
-expression+=value;
-
-updateDisplay();
-
-}
-
-}
-
-function calculate(){
-
-if(!expression)return;
-
-try{
-
-const exp=
-expression.replace(/%/g,"/100");
-
-const answer=
-Function(
-`"use strict";return (${exp})`
-)();
-
-if(answer===undefined ||
-Number.isNaN(answer) ||
-!Number.isFinite(answer)){
-
-throw Error();
-
-}
-
-saveHistory({
-
-exp:expression,
-
-result:String(answer)
-
-});
-
-expression=
-String(answer);
-
-updateDisplay();
-
-}catch{
-
-resultEl.textContent=
-"Error";
 
 setTimeout(()=>{
 
-updateDisplay();
+copyBtn.innerText =
+"Copy Result";
 
 },1200);
 
-}
-
-}
-
-document.addEventListener(
-"keydown",
-e=>{
-
-if(
-/[0-9+\-*/.%]/.test(e.key)
-){
-
-expression+=e.key;
-
-updateDisplay();
-
-return;
-
-}
-
-if(e.key==="Enter"){
-
-e.preventDefault();
-
-calculate();
-
-return;
-
-}
-
-if(e.key==="Backspace"){
-
-expression=
-expression.slice(0,-1);
-
-updateDisplay();
-
-return;
-
-}
-
-if(e.key==="Escape"){
-
-expression="";
-
-updateDisplay();
-
-}
-
-});
-
-copyBtn.addEventListener(
-"click",
-async()=>{
-
-try{
-
-await navigator.clipboard.writeText(
-resultEl.textContent
-);
-
-copyBtn.textContent=
-"Copied ✓";
-
-setTimeout(()=>{
-
-copyBtn.textContent=
-"Copy";
-
-},1500);
-
-}catch{
-
-copyBtn.textContent=
-"Failed";
-
-setTimeout(()=>{
-
-copyBtn.textContent=
-"Copy";
-
-},1500);
-
-}
-
-});
-
-historyBtn.onclick=()=>{
-
-historyPanel.classList.add("open");
-
-overlay.classList.add("show");
 
 };
+// PWA Install System
 
-closeHistory.onclick=()=>{
+let deferredPrompt = null;
 
-historyPanel.classList.remove("open");
-
-overlay.classList.remove("show");
-
-};
-
-overlay.onclick=()=>{
-
-historyPanel.classList.remove("open");
-
-themeMenu.classList.remove("show");
-
-overlay.classList.remove("show");
-
-};
-
-
-const themes = {
-  midnight:{
-    bg:"#0f172a",
-    card:"#1e293b",
-    text:"#ffffff",
-    accent:"#8b5cf6",
-    button:"#334155",
-    hover:"#475569"
-  },
-  amoled:{
-    bg:"#000000",
-    card:"#111111",
-    text:"#ffffff",
-    accent:"#2563eb",
-    button:"#1f1f1f",
-    hover:"#303030"
-  },
-  purple:{
-    bg:"#2e1065",
-    card:"#4c1d95",
-    text:"#ffffff",
-    accent:"#a855f7",
-    button:"#6d28d9",
-    hover:"#7c3aed"
-  },
-  emerald:{
-    bg:"#022c22",
-    card:"#064e3b",
-    text:"#ffffff",
-    accent:"#10b981",
-    button:"#065f46",
-    hover:"#047857"
-  },
-  sunset:{
-    bg:"#431407",
-    card:"#7c2d12",
-    text:"#ffffff",
-    accent:"#f97316",
-    button:"#9a3412",
-    hover:"#c2410c"
-  },
-  rose:{
-    bg:"#4c0519",
-    card:"#881337",
-    text:"#ffffff",
-    accent:"#f43f5e",
-    button:"#9f1239",
-    hover:"#be123c"
-  },
-  arctic:{
-    bg:"#f3f4f6",
-    card:"#ffffff",
-    text:"#111827",
-    accent:"#2563eb",
-    button:"#e5e7eb",
-    hover:"#d1d5db"
-  },
-  cyber:{
-    bg:"#083344",
-    card:"#164e63",
-    text:"#ffffff",
-    accent:"#06b6d4",
-    button:"#155e75",
-    hover:"#0e7490"
-  }
-};
-
-function applyTheme(name){
-
-  const t = themes[name];
-  if(!t) return;
-
-  document.body.style.setProperty("--bg",t.bg);
-  document.body.style.setProperty("--card",t.card);
-  document.body.style.setProperty("--text",t.text);
-  document.body.style.setProperty("--accent",t.accent);
-  document.body.style.setProperty("--button",t.button);
-  document.body.style.setProperty("--buttonHover",t.hover);
-
-  localStorage.setItem("rv_theme",name);
-
-}
-
-themeCards.forEach(card=>{
-
-  card.onclick=()=>{
-
-    applyTheme(card.dataset.theme);
-
-    themeMenu.classList.remove("show");
-    overlay.classList.remove("show");
-
-  };
-
-});
-
-themeBtn.onclick=()=>{
-
-  themeMenu.classList.add("show");
-  overlay.classList.add("show");
-
-};
-
-applyTheme(
-localStorage.getItem("rv_theme") || "midnight"
-);
 
 window.addEventListener(
 "beforeinstallprompt",
-e=>{
+(event)=>{
 
-  e.preventDefault();
+event.preventDefault();
 
-  deferredPrompt=e;
+deferredPrompt = event;
 
-  installBtn.style.display="block";
+installBtn.style.display="block";
 
 });
-  if(
-window.matchMedia("(display-mode: standalone)").matches ||
-window.navigator.standalone
-){
- installBtn.style.display="none";
-  }
 
-installBtn.onclick=async()=>{
 
-  if(!deferredPrompt) return;
 
-  deferredPrompt.prompt();
+installBtn.onclick = async()=>{
 
-  await deferredPrompt.userChoice;
-  localStorage.setItem("rv_installed","true");
 
-  deferredPrompt=null;
-  
+if(!deferredPrompt){
+
+installBtn.innerText =
+"Not Available";
+
+setTimeout(()=>{
+
+installBtn.innerText =
+"Install App";
+
+},1500);
+
+return;
+
+}
+
+
+
+deferredPrompt.prompt();
+
+
+const choice =
+await deferredPrompt.userChoice;
+
+
+
+if(choice.outcome==="accepted"){
+
+installBtn.style.display="none";
+
+}
+
+
+deferredPrompt=null;
+
 
 };
 
-if("serviceWorker" in navigator){
 
-  window.addEventListener("load",()=>{
 
-    navigator.serviceWorker.register(
-      "service-worker.js"
-    );
+// Hide button if already installed
 
-  });
-  if(window.matchMedia("(display-mode: standalone)").matches){
-  installBtn.style.display="none";
-}
-  if(localStorage.getItem("rv_installed")=="true"){
-  installBtn.style.display="none";
-  }
+window.addEventListener(
+"appinstalled",
+()=>{
 
-updateDisplay();
+installBtn.style.display="none";
 
-window.addEventListener("appinstalled", ()=>{
-  installBtn.style.display="none";
 });
+
+
+
+// Keyboard Support
+
+document.addEventListener(
+"keydown",
+(e)=>{
+
+
+let key =
+e.key;
+
+
+
+if(
+(key>="0" && key<="9") ||
+["+","-","*","/","."].includes(key)
+){
+
+handle(key);
+
+}
+
+
+
+if(key==="Enter"){
+
+calculate();
+
+}
+
+
+
+if(key==="Backspace"){
+
+handle("⌫");
+
+}
+
+
+
+if(key==="Escape"){
+
+handle("C");
+
+}
+
+
+
+});
+
+
+
+// Service Worker
+
+if(
+"serviceWorker" in navigator
+){
+
+window.addEventListener(
+"load",
+()=>{
+
+
+navigator.serviceWorker.register(
+"service-worker.js"
+);
+
+
+});
+
+
+}
+
+
+
+// Final display
+
+result.innerText="0";
+
 
 </script>
 
+
 </body>
+
 </html>
