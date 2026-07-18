@@ -1,13 +1,19 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Ryzen Voss Calculator</title>
 
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<meta charset="UTF-8">
+<meta
+name="viewport"
+content="width=device-width, initial-scale=1.0">
+
+<meta
+name="theme-color"
+content="#6d28d9">
+
+<title>Ryzen Voss Calculator v2.0</title>
+
+<link rel="manifest" href="manifest.json">
 
 <style>
 
@@ -15,229 +21,207 @@
 margin:0;
 padding:0;
 box-sizing:border-box;
-font-family:'Poppins',sans-serif;
+font-family:Inter,Segoe UI,Arial,sans-serif;
 -webkit-tap-highlight-color:transparent;
 }
 
+html,body{
+height:100%;
+}
+
 body{
-min-height:100vh;
+
+--bg:#0f172a;
+--card:#1e293b;
+--text:#ffffff;
+--accent:#8b5cf6;
+--button:#334155;
+--buttonHover:#475569;
+--shadow:rgba(0,0,0,.35);
+
+background:var(--bg);
+color:var(--text);
+
 display:flex;
 justify-content:center;
 align-items:center;
-overflow:hidden;
-background:#090909;
-position:relative;
+
+padding:20px;
+
+transition:.35s;
 }
 
-body::before{
-content:"";
-position:absolute;
-width:450px;
-height:450px;
-background:#8a2be2;
-border-radius:50%;
-left:-150px;
-top:-150px;
-filter:blur(160px);
-animation:float1 8s ease-in-out infinite;
-}
+.wrapper{
 
-body::after{
-content:"";
-position:absolute;
-width:420px;
-height:420px;
-background:#00d5ff;
-border-radius:50%;
-right:-140px;
-bottom:-140px;
-filter:blur(160px);
-animation:float2 10s ease-in-out infinite;
-}
+width:100%;
+max-width:420px;
 
-@keyframes float1{
-0%,100%{transform:translateY(0);}
-50%{transform:translateY(50px);}
-}
-
-@keyframes float2{
-0%,100%{transform:translateY(0);}
-50%{transform:translateY(-60px);}
-}
-
-.calculator{
-
-width:min(95vw,420px);
-
-backdrop-filter:blur(25px);
-
-background:rgba(255,255,255,.08);
-
-border:1px solid rgba(255,255,255,.12);
+background:var(--card);
 
 border-radius:28px;
 
 padding:22px;
 
 box-shadow:
-0 10px 45px rgba(0,0,0,.5),
-0 0 30px rgba(138,43,226,.25);
+0 20px 40px var(--shadow);
 
-position:relative;
-
-z-index:10;
+backdrop-filter:blur(20px);
 
 }
 
-.header{
+.title{
 
-display:flex;
+font-size:28px;
+font-weight:700;
 
-justify-content:space-between;
-
-align-items:center;
+text-align:center;
 
 margin-bottom:18px;
 
 }
 
-.logo{
+.subtitle{
 
-font-size:20px;
+text-align:center;
 
-font-weight:700;
+opacity:.75;
 
-background:linear-gradient(90deg,#00d5ff,#9b4dff);
+font-size:13px;
 
--webkit-background-clip:text;
-
--webkit-text-fill-color:transparent;
+margin-bottom:20px;
 
 }
 
-.theme{
-
-width:42px;
-
-height:42px;
-
-border-radius:50%;
-
-border:none;
-
-cursor:pointer;
-
-font-size:18px;
-
-background:rgba(255,255,255,.08);
-
-color:white;
-
-transition:.3s;
-
-}
-
-.theme:hover{
-
-transform:rotate(180deg);
-
-}
-
-.display{
-
-height:120px;
-
-border-radius:20px;
-
-padding:15px;
-
-background:rgba(255,255,255,.06);
+.toolbar{
 
 display:flex;
 
-flex-direction:column;
+gap:10px;
 
-justify-content:flex-end;
-
-align-items:flex-end;
-
-overflow:hidden;
+margin-bottom:16px;
 
 }
 
-.history{
+.toolbar button{
 
-font-size:17px;
+flex:1;
 
-color:#bdbdbd;
-
-min-height:25px;
-
-}
-
-.result{
-
-font-size:42px;
-
-font-weight:600;
-
-color:#fff;
-
-word-break:break-all;
-
-}
-
-.buttons{
-
-margin-top:20px;
-
-display:grid;
-
-grid-template-columns:repeat(4,1fr);
-
-gap:12px;
-
-}
-
-button{
-
-height:70px;
+height:46px;
 
 border:none;
 
-border-radius:18px;
+border-radius:14px;
 
-font-size:22px;
-
-cursor:pointer;
+background:var(--button);
 
 color:white;
 
-background:rgba(255,255,255,.08);
+font-size:15px;
+
+cursor:pointer;
 
 transition:.25s;
 
 }
 
-button:hover{
+.toolbar button:hover{
 
-transform:translateY(-3px);
-
-background:rgba(255,255,255,.15);
+background:var(--buttonHover);
 
 }
 
-button:active{
+.display{
 
-transform:scale(.95);
+background:rgba(255,255,255,.06);
+
+padding:18px;
+
+border-radius:18px;
+
+margin-bottom:18px;
+
+min-height:95px;
+
+display:flex;
+
+flex-direction:column;
+
+justify-content:center;
+
+overflow:hidden;
+
+}
+
+#expression{
+
+font-size:18px;
+
+opacity:.7;
+
+word-wrap:break-word;
+
+text-align:right;
+
+min-height:24px;
+
+}
+
+#result{
+
+font-size:36px;
+
+font-weight:700;
+
+text-align:right;
+
+margin-top:10px;
+
+word-wrap:break-word;
+
+}
+
+.grid{
+
+display:grid;
+
+grid-template-columns:
+repeat(4,1fr);
+
+gap:12px;
+
+}
+
+.key{
+
+height:66px;
+
+border:none;
+
+border-radius:18px;
+
+background:var(--button);
+
+color:white;
+
+font-size:22px;
+
+cursor:pointer;
+
+transition:.25s;
+
+}
+
+.key:hover{
+
+background:var(--buttonHover);
+
+transform:translateY(-2px);
 
 }
 
 .operator{
 
-background:linear-gradient(135deg,#8a2be2,#00d5ff);
-
-font-weight:700;
+background:var(--accent);
 
 }
 
@@ -245,9 +229,7 @@ font-weight:700;
 
 grid-column:span 2;
 
-background:linear-gradient(135deg,#00d5ff,#8a2be2);
-
-font-size:28px;
+background:#16a34a;
 
 }
 
@@ -257,110 +239,394 @@ grid-column:span 2;
 
 }
 
-@media(max-width:480px){
+.bottom{
 
-.calculator{
+display:flex;
 
-padding:18px;
+gap:10px;
+
+margin-top:18px;
 
 }
 
-button{
+.bottom button{
 
-height:65px;
+flex:1;
+
+height:48px;
+
+border:none;
+
+border-radius:14px;
+
+background:var(--button);
+
+color:white;
+
+font-size:15px;
+
+cursor:pointer;
+
+}
+
+.historyPanel{
+
+position:fixed;
+
+top:0;
+
+right:-100%;
+
+width:320px;
+
+height:100%;
+
+background:#111827;
+
+padding:20px;
+
+overflow:auto;
+
+transition:.35s;
+
+z-index:100;
+
+}
+
+.historyPanel.open{
+
+right:0;
+
+}
+
+.historyHeader{
+
+display:flex;
+
+justify-content:space-between;
+
+align-items:center;
+
+margin-bottom:20px;
+
+}
+
+.historyItem{
+
+padding:12px;
+
+background:#1f2937;
+
+border-radius:12px;
+
+margin-bottom:10px;
+
+cursor:pointer;
+
+transition:.2s;
+
+}
+
+.historyItem:hover{
+
+background:#374151;
+
+}
+
+.themeMenu{
+
+position:fixed;
+
+left:50%;
+
+top:50%;
+
+transform:
+translate(-50%,-50%)
+scale(.9);
+
+opacity:0;
+
+pointer-events:none;
+
+background:#111827;
+
+padding:20px;
+
+border-radius:20px;
+
+width:320px;
+
+transition:.3s;
+
+z-index:120;
+
+}
+
+.themeMenu.show{
+
+opacity:1;
+
+transform:
+translate(-50%,-50%)
+scale(1);
+
+pointer-events:auto;
+
+}
+
+.themeGrid{
+
+display:grid;
+
+grid-template-columns:
+repeat(2,1fr);
+
+gap:12px;
+
+margin-top:18px;
+
+}
+
+.themeCard{
+
+height:60px;
+
+border-radius:14px;
+
+cursor:pointer;
+
+border:2px solid transparent;
+
+transition:.25s;
+
+}
+
+.themeCard:hover{
+
+transform:scale(1.05);
+
+}
+
+.overlay{
+
+position:fixed;
+
+inset:0;
+
+background:rgba(0,0,0,.5);
+
+opacity:0;
+
+pointer-events:none;
+
+transition:.3s;
+
+z-index:110;
+
+}
+
+.overlay.show{
+
+opacity:1;
+
+pointer-events:auto;
+
+}
+
+@media(max-width:480px){
+
+.wrapper{
+
+padding:16px;
+
+}
+
+.key{
+
+height:60px;
 
 font-size:20px;
 
 }
 
-.result{
+#result{
 
-font-size:36px;
-
-}
+font-size:30px;
 
 }
 
-.light{
-
-background:#ececec;
-
-}
-
-.light .calculator{
-
-background:rgba(255,255,255,.65);
-
-}
-
-.light .result,
-
-.light .logo,
-
-.light button{
-
-color:#111;
-
-}.light .theme{
-color:#111;
-}
-
-.light .display{
-background:rgba(255,255,255,.5);
-}
-
-.light .history{
-color:#555;
-}
-
-.operator,
-.equal{
-color:#fff !important;
 }
 
 </style>
+
 </head>
 
 <body>
 
-<div class="calculator">
+<div class="wrapper">
 
-<div class="header">
-<div class="logo">RYZEN VOSS</div>
-<button class="theme" id="themeBtn">🌙</button>
+<div class="title">
+Ryzen Voss
+</div>
+
+<div class="subtitle">
+Calculator v2.0
+</div>
+
+<div class="toolbar">
+
+<button id="historyBtn">
+History
+</button>
+
+<button id="themeBtn">
+Themes
+</button>
+
 </div>
 
 <div class="display">
-<div class="history" id="history"></div>
-<div class="result" id="result">0</div>
+
+<div id="expression"></div>
+
+<div id="result">0</div>
+
 </div>
 
-<div class="buttons">
+<div class="grid">
 
-<button onclick="clearAll()">C</button>
-<button onclick="del()">⌫</button>
-<button onclick="press('%')">%</button>
-<button class="operator" onclick="press('/')">÷</button>
+<button class="key operator" data-value="C">C</button>
 
-<button onclick="press('7')">7</button>
-<button onclick="press('8')">8</button>
-<button onclick="press('9')">9</button>
-<button class="operator" onclick="press('*')">×</button>
+<button class="key operator" data-value="⌫">⌫</button>
 
-<button onclick="press('4')">4</button>
-<button onclick="press('5')">5</button>
-<button onclick="press('6')">6</button>
-<button class="operator" onclick="press('-')">−</button>
+<button class="key operator" data-value="%">%</button>
 
-<button onclick="press('1')">1</button>
-<button onclick="press('2')">2</button>
-<button onclick="press('3')">3</button>
-<button class="operator" onclick="press('+')">+</button>
+<button class="key operator" data-value="/">÷</button>
 
-<button class="zero" onclick="press('0')">0</button>
-<button onclick="press('.')">.</button>
+<button class="key" data-value="7">7</button>
 
-<button class="equal" onclick="calculate()">=</button>
+<button class="key" data-value="8">8</button>
+
+<button class="key" data-value="9">9</button>
+
+<button class="key operator" data-value="*">×</button>
+
+<button class="key" data-value="4">4</button>
+
+<button class="key" data-value="5">5</button>
+
+<button class="key" data-value="6">6</button>
+
+<button class="key operator" data-value="-">−</button>
+
+<button class="key" data-value="1">1</button>
+
+<button class="key" data-value="2">2</button>
+
+<button class="key" data-value="3">3</button>
+
+<button class="key operator" data-value="+">+</button>
+
+<button class="key zero" data-value="0">0</button>
+
+<button class="key" data-value=".">.</button>
+
+<button class="key equal" data-value="=">=</button>
+
+</div>
+
+<div class="bottom">
+
+<button id="copyBtn">
+Copy
+</button>
+
+<button id="installBtn">
+Install
+</button>
+
+</div>
+
+</div>
+
+<div class="overlay" id="overlay"></div>
+
+<div class="historyPanel" id="historyPanel">
+
+<div class="historyHeader">
+
+<h2>History</h2>
+
+<button id="closeHistory">
+✕
+</button>
+
+</div>
+
+<div id="historyList"></div>
+
+<button id="clearHistory">
+Clear History
+</button>
+
+</div>
+
+<div class="themeMenu" id="themeMenu">
+
+<h2>Select Theme</h2>
+
+<div class="themeGrid" id="themeGrid">
+
+
+
+<div
+class="themeCard"
+data-theme="midnight"
+style="background:#0f172a;">
+</div>
+
+<div
+class="themeCard"
+data-theme="amoled"
+style="background:#000000;">
+</div>
+
+<div
+class="themeCard"
+data-theme="purple"
+style="background:#6d28d9;">
+</div>
+
+<div
+class="themeCard"
+data-theme="emerald"
+style="background:#059669;">
+</div>
+
+<div
+class="themeCard"
+data-theme="sunset"
+style="background:#ea580c;">
+</div>
+
+<div
+class="themeCard"
+data-theme="rose"
+style="background:#e11d48;">
+</div>
+
+<div
+class="themeCard"
+data-theme="arctic"
+style="background:#f3f4f6;border:1px solid #d1d5db;">
+</div>
+
+<div
+class="themeCard"
+data-theme="cyber"
+style="background:#06b6d4;">
+</div>
 
 </div>
 
@@ -368,100 +634,481 @@ color:#fff !important;
 
 <script>
 
-const result=document.getElementById("result");
-const history=document.getElementById("history");
+const expressionEl =
+document.getElementById("expression");
 
-let expression="";
+const resultEl =
+document.getElementById("result");
 
-function press(value){
+const keys =
+document.querySelectorAll(".key");
 
-if(result.innerText==="0" && value!=="."){
-result.innerText="";
+const copyBtn =
+document.getElementById("copyBtn");
+
+const installBtn =
+document.getElementById("installBtn");
+
+const historyBtn =
+document.getElementById("historyBtn");
+
+const historyPanel =
+document.getElementById("historyPanel");
+
+const closeHistory =
+document.getElementById("closeHistory");
+
+const historyList =
+document.getElementById("historyList");
+
+const clearHistory =
+document.getElementById("clearHistory");
+
+const overlay =
+document.getElementById("overlay");
+
+const themeBtn =
+document.getElementById("themeBtn");
+
+const themeMenu =
+document.getElementById("themeMenu");
+
+const themeCards =
+document.querySelectorAll(".themeCard");
+
+let expression = "";
+
+let deferredPrompt = null;
+
+let history =
+JSON.parse(
+localStorage.getItem("rv_history")
+) || [];
+
+function updateDisplay(){
+
+expressionEl.textContent =
+expression || "";
+
+resultEl.textContent =
+expression || "0";
+
 }
 
-expression+=value;
-result.innerText=expression;
+function saveHistory(item){
+
+history.unshift(item);
+
+if(history.length>100){
+
+history.pop();
 
 }
 
-function clearAll(){
+localStorage.setItem(
+"rv_history",
+JSON.stringify(history)
+);
+
+renderHistory();
+
+}
+
+function renderHistory(){
+
+historyList.innerHTML="";
+
+history.forEach(entry=>{
+
+const div =
+document.createElement("div");
+
+div.className =
+"historyItem";
+
+div.innerHTML =
+`
+<div>${entry.exp}</div>
+<strong>${entry.result}</strong>
+`;
+
+div.onclick=()=>{
+
+expression =
+entry.result;
+
+updateDisplay();
+
+historyPanel.classList.remove("open");
+
+overlay.classList.remove("show");
+
+};
+
+historyList.appendChild(div);
+
+});
+
+}
+
+renderHistory();
+
+
+
+keys.forEach(button=>{
+
+button.addEventListener("click",()=>{
+
+const value=
+button.dataset.value;
+
+handleInput(value);
+
+});
+
+});
+
+function handleInput(value){
+
+switch(value){
+
+case "C":
 
 expression="";
-history.innerText="";
-result.innerText="0";
+
+updateDisplay();
+
+break;
+
+case "⌫":
+
+expression=
+expression.slice(0,-1);
+
+updateDisplay();
+
+break;
+
+case "=":
+
+calculate();
+
+break;
+
+default:
+
+expression+=value;
+
+updateDisplay();
 
 }
 
-function del(){
+}
 
-expression=expression.slice(0,-1);
+function calculate(){
 
-result.innerText=expression||"0";
-
-}function calculate(){
+if(!expression)return;
 
 try{
 
-history.innerText=expression;
+const exp=
+expression.replace(/%/g,"/100");
 
-expression=expression.replace(/%/g,"/100");
+const answer=
+Function(
+`"use strict";return (${exp})`
+)();
 
-let answer=eval(expression);
+if(answer===undefined ||
+Number.isNaN(answer) ||
+!Number.isFinite(answer)){
 
-if(answer===Infinity || isNaN(answer)){
-result.innerText="Error";
-expression="";
-return;
+throw Error();
+
 }
 
-answer=parseFloat(answer.toFixed(10));
+saveHistory({
 
-result.innerText=answer;
-expression=answer.toString();
+exp:expression,
+
+result:String(answer)
+
+});
+
+expression=
+String(answer);
+
+updateDisplay();
 
 }catch{
 
-result.innerText="Error";
+resultEl.textContent=
+"Error";
+
+setTimeout(()=>{
+
+updateDisplay();
+
+},1200);
+
+}
+
+}
+
+document.addEventListener(
+"keydown",
+e=>{
+
+if(
+/[0-9+\-*/.%]/.test(e.key)
+){
+
+expression+=e.key;
+
+updateDisplay();
+
+return;
+
+}
+
+if(e.key==="Enter"){
+
+e.preventDefault();
+
+calculate();
+
+return;
+
+}
+
+if(e.key==="Backspace"){
+
+expression=
+expression.slice(0,-1);
+
+updateDisplay();
+
+return;
+
+}
+
+if(e.key==="Escape"){
+
 expression="";
 
-}
+updateDisplay();
 
-}
-
-document.addEventListener("keydown",(e)=>{
-
-const key=e.key;
-
-if("0123456789+-*/.%".includes(key)){
-press(key);
-}
-
-else if(key==="Enter"){
-e.preventDefault();
-calculate();
-}
-
-else if(key==="Backspace"){
-del();
-}
-
-else if(key==="Escape"){
-clearAll();
 }
 
 });
 
-const themeBtn=document.getElementById("themeBtn");
+copyBtn.addEventListener(
+"click",
+async()=>{
+
+try{
+
+await navigator.clipboard.writeText(
+resultEl.textContent
+);
+
+copyBtn.textContent=
+"Copied ✓";
+
+setTimeout(()=>{
+
+copyBtn.textContent=
+"Copy";
+
+},1500);
+
+}catch{
+
+copyBtn.textContent=
+"Failed";
+
+setTimeout(()=>{
+
+copyBtn.textContent=
+"Copy";
+
+},1500);
+
+}
+
+});
+
+historyBtn.onclick=()=>{
+
+historyPanel.classList.add("open");
+
+overlay.classList.add("show");
+
+};
+
+closeHistory.onclick=()=>{
+
+historyPanel.classList.remove("open");
+
+overlay.classList.remove("show");
+
+};
+
+overlay.onclick=()=>{
+
+historyPanel.classList.remove("open");
+
+themeMenu.classList.remove("show");
+
+overlay.classList.remove("show");
+
+};
+
+
+const themes = {
+  midnight:{
+    bg:"#0f172a",
+    card:"#1e293b",
+    text:"#ffffff",
+    accent:"#8b5cf6",
+    button:"#334155",
+    hover:"#475569"
+  },
+  amoled:{
+    bg:"#000000",
+    card:"#111111",
+    text:"#ffffff",
+    accent:"#2563eb",
+    button:"#1f1f1f",
+    hover:"#303030"
+  },
+  purple:{
+    bg:"#2e1065",
+    card:"#4c1d95",
+    text:"#ffffff",
+    accent:"#a855f7",
+    button:"#6d28d9",
+    hover:"#7c3aed"
+  },
+  emerald:{
+    bg:"#022c22",
+    card:"#064e3b",
+    text:"#ffffff",
+    accent:"#10b981",
+    button:"#065f46",
+    hover:"#047857"
+  },
+  sunset:{
+    bg:"#431407",
+    card:"#7c2d12",
+    text:"#ffffff",
+    accent:"#f97316",
+    button:"#9a3412",
+    hover:"#c2410c"
+  },
+  rose:{
+    bg:"#4c0519",
+    card:"#881337",
+    text:"#ffffff",
+    accent:"#f43f5e",
+    button:"#9f1239",
+    hover:"#be123c"
+  },
+  arctic:{
+    bg:"#f3f4f6",
+    card:"#ffffff",
+    text:"#111827",
+    accent:"#2563eb",
+    button:"#e5e7eb",
+    hover:"#d1d5db"
+  },
+  cyber:{
+    bg:"#083344",
+    card:"#164e63",
+    text:"#ffffff",
+    accent:"#06b6d4",
+    button:"#155e75",
+    hover:"#0e7490"
+  }
+};
+
+function applyTheme(name){
+
+  const t = themes[name];
+  if(!t) return;
+
+  document.body.style.setProperty("--bg",t.bg);
+  document.body.style.setProperty("--card",t.card);
+  document.body.style.setProperty("--text",t.text);
+  document.body.style.setProperty("--accent",t.accent);
+  document.body.style.setProperty("--button",t.button);
+  document.body.style.setProperty("--buttonHover",t.hover);
+
+  localStorage.setItem("rv_theme",name);
+
+}
+
+themeCards.forEach(card=>{
+
+  card.onclick=()=>{
+
+    applyTheme(card.dataset.theme);
+
+    themeMenu.classList.remove("show");
+    overlay.classList.remove("show");
+
+  };
+
+});
 
 themeBtn.onclick=()=>{
 
-document.body.classList.toggle("light");
-
-themeBtn.textContent=
-document.body.classList.contains("light")
-?"☀️":"🌙";
+  themeMenu.classList.add("show");
+  overlay.classList.add("show");
 
 };
+
+applyTheme(
+localStorage.getItem("rv_theme") || "midnight"
+);
+
+window.addEventListener(
+"beforeinstallprompt",
+e=>{
+
+  e.preventDefault();
+
+  deferredPrompt=e;
+
+  installBtn.style.display="block";
+
+});
+
+installBtn.onclick=async()=>{
+
+  if(!deferredPrompt) return;
+
+  deferredPrompt.prompt();
+
+  await deferredPrompt.userChoice;
+
+  deferredPrompt=null;
+
+};
+
+if("serviceWorker" in navigator){
+
+  window.addEventListener("load",()=>{
+
+    navigator.serviceWorker.register(
+      "service-worker.js"
+    );
+
+  });
+
+}
+
+updateDisplay();
 
 </script>
 
