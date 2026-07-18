@@ -1113,18 +1113,13 @@ if("serviceWorker" in navigator){
   });
   if(window.matchMedia("(display-mode: standalone)").matches){
   installBtn.style.display="none";
-  }
-
 }
 
 updateDisplay();
-  window.addEventListener("appinstalled", ()=>{
+
+window.addEventListener("appinstalled", ()=>{
   installBtn.style.display="none";
 });
-
-if(window.matchMedia("(display-mode: standalone)").matches){
-  installBtn.style.display="none";
-}
 
 </script>
 
