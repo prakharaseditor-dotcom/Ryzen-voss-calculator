@@ -1097,8 +1097,10 @@ installBtn.onclick=async()=>{
   deferredPrompt.prompt();
 
   await deferredPrompt.userChoice;
+  localStorage.setItem("rv_installed","true");
 
   deferredPrompt=null;
+  
 
 };
 
@@ -1114,6 +1116,9 @@ if("serviceWorker" in navigator){
   if(window.matchMedia("(display-mode: standalone)").matches){
   installBtn.style.display="none";
 }
+  if(localStorage.getItem("rv_installed")=="true"){
+  installBtn.style.display="none";
+  }
 
 updateDisplay();
 
