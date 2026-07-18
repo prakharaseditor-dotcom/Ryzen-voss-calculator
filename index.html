@@ -506,12 +506,42 @@ Install App
 
 
 <script>
-    historyBtn.onclick=()=>{
+    const historyBtn =
+document.getElementById("historyBtn");
 
-historyPanel.style.display="block";
+const historyPanel =
+document.getElementById("historyPanel");
+
+const historyList =
+document.getElementById("historyList");
+
+
+historyBtn.onclick=()=>{
+
+historyPanel.style.display =
+"block";
 
 showHistory();
 
+};
+function showHistory(){
+
+historyList.innerHTML="";
+
+history.forEach(item=>{
+
+historyList.innerHTML += `
+
+<div class="history-item">
+<span>${item.text}</span>
+<b>${item.result}</b>
+</div>
+
+`;
+
+});
+
+}
 };
 
 
